@@ -18,9 +18,9 @@ Route::resource('/comments', CommentController::class)->middleware(['auth', 'ver
 // Route::put('/posts/{id}', [PostController::class,'update']);
 
 Route::get('/', function () {
-    $posts = Post::all();
-
-    return view("posts.index", ["posts" => $posts]);
+    $posts = Post::orderBy('created_at', 'desc')->get();
+    return view('posts.index', compact('posts'));
+    
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
